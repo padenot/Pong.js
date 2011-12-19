@@ -98,6 +98,7 @@ Pong.Ball.prototype.move = function() {
     this.y = Pong._config.scene.margin+this.r;
     this.dy = -this.dy;
     this.sendBallData();
+    this.pong.sound.play("bounce");
   }
   // Bottom
   else {
@@ -106,6 +107,7 @@ Pong.Ball.prototype.move = function() {
       this.y = canvasBottomMarginPos-this.r;
       this.dy = -this.dy;
       this.sendBallData();
+      this.pong.sound.play("bounce");
     }
   }
 
@@ -120,6 +122,8 @@ Pong.Ball.prototype.move = function() {
     if((this.x-this.r) <= handleBoundaryPos) { // on the extreme left ?
       if(this.x <= Pong._config.scene.margin) { // out of scene
         this.pong.ballIsOut();
+        this.pong.sound.play("lose");
+        this.pong.winner = Pong.Player.RIGHT;
       }
       else {
         inVerticalBoundaries = (this.y >= player.position) &&
@@ -128,6 +132,7 @@ Pong.Ball.prototype.move = function() {
         if(inVerticalBoundaries) {
           this.x = handleBoundaryPos+this.r;
           this.dx = -this.dx;
+          this.pong.sound.play("paddle");
           this.sendBallData();
         }
       }
@@ -141,6 +146,8 @@ Pong.Ball.prototype.move = function() {
     if((this.x+this.r) >= handleBoundaryPos) {
       if(this.x >= (this.pong.canvas.width + Pong._config.scene.margin)) {
         this.pong.ballIsOut();
+        this.pong.sound.play("lose");
+        this.pong.winner = Pong.Player.LEFT;
       }
       else {
         inVerticalBoundaries = (this.y >= player.position) &&
@@ -149,6 +156,7 @@ Pong.Ball.prototype.move = function() {
         if(inVerticalBoundaries) {
           this.x = handleBoundaryPos-this.r;
           this.dx = -this.dx;
+          this.pong.sound.play("paddle");
           this.sendBallData();
         }
       }

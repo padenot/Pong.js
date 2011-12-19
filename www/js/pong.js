@@ -14,7 +14,7 @@ var Pong, _config = {
     separatorWidth: 2,
     separatorStyle: '#999',
     separatorDashLength: 12,
-    separatorGapLength: 6,
+    separatorGapLength: 6
   },
   handle: {
     width: 12,
@@ -23,17 +23,17 @@ var Pong, _config = {
     // If the value is negative, the position is computed according to the
     // opposite side of the canvas.
     playerPosition: [20, -20],
-    playerStyle: ['white', 'white'],
+    playerStyle: ['white', 'white']
   },
   ball: {
     radius: 4,
     style: 'white',
-    refreshDelay: Math.round(1000/60), // in milliseconds
+    refreshDelay: Math.round(1000/60) // in milliseconds
   },
   network: {
     refreshDelay: Math.round(1000/60), // in milliseconds
-    refreshTicks: 60, // in milliseconds
-  },
+    refreshTicks: 60 // in milliseconds
+  }
 };
 
 /**
@@ -132,6 +132,10 @@ Pong = function (canvasElt) {
    */
   this.network = null;
   /**
+   * Sound helper
+   */
+  this.sound = null;
+  /**
    * Networking state Element
    */
   this.networkElt = null;
@@ -157,6 +161,10 @@ Pong = function (canvasElt) {
 
   // Prepare connexion
   this.network = new Pong.Network(this);
+
+  // Fetch sound assets
+  this.sound = new Pong.Sound(this);
+  this.sound.preloadSounds();
 
   this.waitUser();
 };
@@ -320,6 +328,9 @@ Pong.prototype.stopGame = function() {
  * Ends the game (reinitialize the game).
  */
 Pong.prototype.endGame = function() {
+  if (this.winner && this.winner == this.playerIdx) {
+    this.sound.play("win");
+  }
   delete this.ball;
   this.ball = null;
 };

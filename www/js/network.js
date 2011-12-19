@@ -162,7 +162,7 @@ Pong.Network.prototype.sendUpdate = function() {
   var data = {
     player: {
       position: this.pong.player.position
-    },
+    }
   };
 
   if(this.sendBallData) {
@@ -170,7 +170,7 @@ Pong.Network.prototype.sendUpdate = function() {
       x:  this.pong.ball.x,
       y:  this.pong.ball.y,
       dx: this.pong.ball.dx,
-      dy: this.pong.ball.dy,
+      dy: this.pong.ball.dy
     };
     this.sendBallData = false;
   }
